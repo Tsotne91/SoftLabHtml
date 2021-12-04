@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Student Registration Form</title>
+</head>
+<body>
+    <h1>Student Registration Form</h1>
+    <form>
+        <label>First name:
+            <input type="text" name="fname" placeholder="Enter your first name">
+        </label><br>
+        <label>Last name:
+             <input type="text" name="lname" placeholder="Enter your last name">
+        </label><br>
+        <label>Email:
+            <input type="email" name="email" placeholder="it should contain @,.">
+        </label><br>
+        <label>Mobile:
+            <input type="tel" name="phone" placeholder="only 10 digits are allowed" pattern="[0-9]{4}-[0-9]{6}">
+        </label><br>
+        <span>Gender:</span>
+        <label class="selectable">
+            <input type="radio"  name="gender"  value="Male">
+            Male
+        </label>
+        <label>
+            <input type="radio"  name="gender"  value="Female">
+            Female
+        </label><br>
+        <label>Date of Birth:
+            <input type="date" name="DOB">
+        </label><br>
+        <label>Address:
+            <textarea name="address" rows="20" cols="15"></textarea>
+        </label>
+        <label>City:
+            <input type="text" name="city">
+        </label><br>
+        <label>Area PIN:
+            <input type="number" name="area">
+        </label><br>
+        <label>State:
+            <input type="text" name="state">
+        </label><br>
+        <label class="selectable">Qualification:
+            <select name="qualification">
+            <option value="Select Qualification">Select Qualification:</option>
+            <option value="Junior">Junior</option>
+            <option value="Middle">Middle</option>
+            <option value="Senior">Senior</option>
+            <option value="Lead">Lead</option>
+            </select>
+        </label><br>
+        <span>Specialization:</span>
+        <label class="selectable">
+            <input type="checkbox" name="Computer Science" value="Computer Science">
+            Computer Science
+        </label><br>
+        <label>
+            <input type="checkbox" name="Information Technology" value="Information Technology">
+            Information Technology
+        </label><br>
+        <label>
+            <input type="checkbox" name="Computer Architecture" value="Computer Architecture">
+            Computer Architecture
+        </label><br>
+        <label>
+            <input type="checkbox" name="Tele Communication" value="Tele Communication">
+            Tele Communication
+        </label><br>
+        <label>Password:
+            <input type="password">
+        </label><br>
+        <input type="submit" value="register">
+    </form>
+
+</body>
+</html>
