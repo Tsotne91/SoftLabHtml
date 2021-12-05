@@ -13,22 +13,25 @@ form {
     flex-flow: column wrap;
 }
 label, span {
-    /*margin-left: 3rem;*/
+    margin-left: 3rem;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-around;
+    /*justify-content: space-around;*/
     margin-top: 1rem;
 }
 
-input, textarea {
+
+.txt, textarea {
     margin-top: 2rem;
     min-width: 45rem;
     min-height: 2rem;
 }
-.selectable {
-    /*flex-direction: row;*/
-    /*justify-content: left;*/
+
+button {
+    max-width: 6rem;
+    background-color: #0b940b;
 }
+
 .selectable input {
     max-width: 1rem;
 }
