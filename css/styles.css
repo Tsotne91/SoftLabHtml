@@ -16,22 +16,42 @@ label, span {
     margin-left: 3rem;
     display: flex;
     flex-flow: row nowrap;
-    /*justify-content: space-around;*/
+    justify-content: center;
     margin-top: 1rem;
 }
-
 
 .txt, textarea {
     margin-top: 2rem;
     min-width: 45rem;
     min-height: 2rem;
 }
-
+span {
+    align-self: flex-start;
+    margin-right: 4em;
+}
 button {
+    font-size: large;
     max-width: 6rem;
     background-color: #0b940b;
+    align-self: center;
+    margin: 2rem;
 }
-
-.selectable input {
-    max-width: 1rem;
+.selectable {
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 12rem;
+    margin-right: 35rem;
+    margin-top: 2rem;
+}
+.selectable span {
+    align-self: flex-start;
+    margin: 0.5rem;
+}
+.selectable label {
+    width: 20rem;
+    display: inline-flex;
+    margin: 0;
 }
