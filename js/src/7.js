@@ -1,6 +1,7 @@
-   const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-   const result = text.split(" ")
+
+   const abbr = (text) => text === null ? null :
+                        text.split(" ")
                        .map(word => word[0].toUpperCase())
                        .reduce((acc, char) => acc+char);
-   console.log(result);
+   module.exports = abbr;
 
