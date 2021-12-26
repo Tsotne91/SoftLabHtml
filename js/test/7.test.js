@@ -12,9 +12,13 @@ describe('exercise 7 test suite', () => {
         const text = "Video Assistant Referee";
         const result = abbr(text);
         expect(result).to.equal("VAR");
-    })
+    });
     it('should return null', () => {
         const result = abbr(null);
         expect(result).to.equal(null);
+    });
+    it ('should return empty string', () => {
+        const result = abbr('');
+        expect(result).to.equal('');
     })
 });
