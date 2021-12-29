@@ -12,10 +12,9 @@ function isPrime (number) {
             for (let i = 4; i <= number; ++i, count = 0) {
                 for (let j = 2; j < i; ++j) {
                     if (i % j === 0) ++count;
-                }
+                    }
                 if (count === 0) result += i + '\n';
-
-                }
+            }
             return ("2\n3\n" + result);
             }
             return higherNum();
