@@ -6,5 +6,9 @@ img {
     height: 18vw;
 }
 .labels {
-    width: 4vw;
+    width: 18rem;
+}
+.main-text {
+    color: #4A6CFA;
+    font-size: 1vw;
 }
