@@ -1,4 +1,4 @@
-import Point from '/home/tsotne/WebstormProjects/SoftLabHtml/js/jsClasses/level1'
+import Point from '/home/tsotne/WebstormProjects/SoftLabHtml/js/src/level1'
 
 class Line extends Point{
 
