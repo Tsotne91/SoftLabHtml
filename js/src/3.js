@@ -25,3 +25,8 @@ const rectangles = [{
             color: "red"
     }];
     rectangles.map((value) => `${value.id} : ` + value["width"]*value["height"]).forEach(val => console.log(val));
+// for (let rectangle of rectangles){
+//     const sum = rectangle.width*rectangle.height;
+//     const id = rectangle.id.toString();
+//     console.log(id + ": " + sum);
+// }

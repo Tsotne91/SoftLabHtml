@@ -6,3 +6,4 @@ function palindrome (word){
     }
     return true;
 }
+palindrome("abcba");

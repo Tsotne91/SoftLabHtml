@@ -1,4 +1,4 @@
-function isPrime (number) {
+function printPrime (number) {
     if (number == null) return ('enter a valid number');
     else if (!(Number.isInteger(number))) return ('invalid input type');
     else if (number <= 1) return ('no prime numbers');
@@ -20,4 +20,4 @@ function isPrime (number) {
             return higherNum();
         }
 }
-module.exports = isPrime;
+console.log(printPrime(100));
