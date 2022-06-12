@@ -11,6 +11,5 @@ export default function MyCard ({title, userId, albumId, onClick}) {
         <div className="border-primary text-secondary mx-4 m-1">
             <p>User ID: {userId}</p>
         </div>
-
     </Card>
 }
