@@ -14,35 +14,36 @@ function App() {
             const response = await axios.get('https://jsonplaceholder.typicode.com/albums');
             setAlbums(response.data);
         }
+
         getAlbums().catch(console.error)
     }, [])
 
-  return (
-      <>
-        <div className="App">
-            <Row className="m-5">
-                {albums.map((album) => (
+    return (
+        <>
+            <div className="App">
+                <Row className="m-5">
+                    {albums.map((album) => (
                         <Col key={album.id} md={3} sm={6} className="my-2">
                             <MyCard
-                            title={album.title}
-                            albumId={album.id}
-                            userId={album.userId}
-                            onClick={()=>{
-                                setAlbumId(album.id);
-                                setModalShow(true);
-                            }}
+                                title={album.title}
+                                albumId={album.id}
+                                userId={album.userId}
+                                onClick={() => {
+                                    setAlbumId(album.id);
+                                    setModalShow(true);
+                                }}
                             />
                         </Col>
                     ))}
-            </Row>
-        </div>
-          <GridModal
-              show={modalShow}
-              albumId={albumId}
-              onHide={() => setModalShow(false)}
-          />
-      </>
-  );
+                </Row>
+            </div>
+            <GridModal
+                show={modalShow}
+                albumId={albumId}
+                onHide={() => setModalShow(false)}
+            />
+        </>
+    );
 }
 
 export default App;
