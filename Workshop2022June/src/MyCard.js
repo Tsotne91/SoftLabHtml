@@ -2,7 +2,7 @@ import React from "react";
 import {Card} from "react-bootstrap";
 
 export default function MyCard({title, userId, albumId, onClick}) {
-    return <Card className="border border-primary text-secondary mx-4 m-1"
+    return <Card className="border border-primary text-secondary mx-4 m-1 bg-success bg-opacity-25"
                  role="button"
                  onClick={onClick}>
         <Card.Header>
