@@ -6,8 +6,8 @@ export default function MyCard({title, userId, albumId, onClick}) {
                  role="button"
                  onClick={onClick}>
         <Card.Header>
-            <h2 className="my-3">{title}</h2>
-            <h3 className="text-danger">Album ID: {albumId}</h3>
+            <p className="my-2">{title}</p>
+            <p className="text-danger">Album ID: {albumId}</p>
         </Card.Header>
         <div className="border-primary text-secondary mx-4 m-1">
             <p>User ID: {userId}</p>

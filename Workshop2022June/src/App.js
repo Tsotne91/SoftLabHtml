@@ -20,7 +20,7 @@ function App() {
 
     return (
         <>
-            <div className="App">
+            <div className="App show-grid">
                 <Row className="m-5">
                     {albums.map((album) => (
                         <Col key={album.id} md={3} sm={6} className="my-2">

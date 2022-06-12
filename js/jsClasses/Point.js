@@ -11,20 +11,12 @@ export default class Point {
         return this.#x;
     }
 
-    set x(value) {
-        this.#x = value;
-    }
-
     get y() {
         return this.#y;
     }
 
-    set y(value) {
-        this.#y = value;
-    }
-
     distance(point2) {
-        return Math.sqrt((point2.x - this.x) + (point2.y - this.y));
+        return Math.sqrt((point2.x - this.x) ** 2 + (point2.y - this.y) ** 2);
     }
 
     toString() {

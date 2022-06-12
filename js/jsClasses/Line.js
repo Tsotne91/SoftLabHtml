@@ -15,16 +15,8 @@ class Line extends Point{
         return this.#point1;
     }
 
-    set point1(value) {
-        this.#point1 = value;
-    }
-
     get point2() {
         return this.#point2;
-    }
-
-    set point2(value) {
-        this.#point2 = value;
     }
 
     length(){
