@@ -1,0 +1,14 @@
+main div a {
+    text-decoration: none;
+}
+img {
+    width: 15vw;
+    height: 18vw;
+}
+.labels {
+    width: 18rem;
+}
+.main-text {
+    color: #4A6CFA;
+    font-size: 1vw;
+}

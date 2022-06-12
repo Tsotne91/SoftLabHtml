@@ -1,0 +1,13 @@
+{
+  "name": "JS_Exer_Tsotne",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "exercises",
+  "main": "src/index.js",
+  "author": "Tsotne",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
+}

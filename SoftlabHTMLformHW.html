@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Student Registration Form</title>
+</head>
+<body>
+<h1>Student Registration Form</h1>
+<form>
+    <label><span>First name:</span>
+        <input type="text" name="fname" placeholder="Enter your first name" class="txt">
+    </label>
+    <label><span>Last name:</span>
+        <input type="text" name="lname" placeholder="Enter your last name" class="txt">
+    </label>
+    <label><span>Email:</span>
+        <input type="email" name="email" placeholder="it should contain @,." class="txt">
+    </label>
+    <label><span>Mobile:</span>
+        <input type="tel" name="phone" placeholder="only 10 digits are allowed" pattern="[0-9]{4}-[0-9]{6}" class="txt">
+    </label>
+    <div class="selectable">
+        <label>
+            <span>Gender:</span>
+            <input type="radio"  name="gender"  value="Male">
+            <span>Male</span>
+        </label>
+        <label>
+            <input type="radio"  name="gender"  value="Female">
+            <span>Female</span>
+        </label>
+    </div>
+    <label><span>Date of Birth:</span>
+        <input type="date" name="DOB" class="txt">
+    </label>
+    <label><span>Address:</span>
+        <textarea name="address" rows="20" cols="15"></textarea>
+    </label>
+    <label><span>City:</span>
+        <input type="text" name="city" class="txt">
+    </label>
+    <label><span>Area PIN:</span>
+        <input type="number" name="area" class="txt">
+    </label>
+    <label><span>State:</span>
+        <input type="text" name="state" class="txt">
+    </label>
+    <div class="selectable">
+        <label >Qualification:
+            <select name="qualification">
+                <option value="Select Qualification">Select Qualification:</option>
+                <option value="Junior">Junior</option>
+                <option value="Middle">Middle</option>
+                <option value="Senior">Senior</option>
+                <option value="Lead">Lead</option>
+            </select>
+        </label>
+    </div>
+    <div class="selectable">
+        <span>Specialization:</span>
+        <label>
+            <input type="checkbox" name="Computer Science" value="Computer Science">
+            Computer Science
+        </label>
+        <label>
+            <input type="checkbox" name="Information Technology" value="Information Technology">
+            Information Technology
+        </label>
+        <label>
+            <input type="checkbox" name="Computer Architecture" value="Computer Architecture">
+            Computer Architecture
+        </label>
+        <label>
+            <input type="checkbox" name="Tele Communication" value="Tele Communication">
+            Tele Communication
+        </label>
+    </div>
+    <label>Password:
+        <input type="password" class="txt">
+    </label>
+    <button type="submit" >register</button>
+</form>
+
+</body>
+</html>
