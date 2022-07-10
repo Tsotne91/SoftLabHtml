@@ -1,43 +1,49 @@
 import {Button, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
-import {PlusSquareFill} from "react-bootstrap-icons"
+import {PlusSquareFill, PencilSquare} from "react-bootstrap-icons"
 import {useEffect, useState} from "react";
-import axios from "axios";
+import api from './api';
 
 
-export default function TodoList() {
+export default function TodoList({show}) {
     const [tasks, setTasks] = useState([]);
     const [formValue, setFormValue] = useState("");
 
     useEffect(() => {
-        async function getTasks() {
-            const response = await axios.get('http://localhost:3030/todos');
-            setTasks(response.data);
-        }
         getTasks().catch(console.error)
-    })
+    }, [])
 
+    async function getTasks() {
+        const response = await api.get("todos");
+        setTasks(response.data);
+    }
     const changeHandler = (e) => {
         setFormValue(e.target.value);
     }
 
     const addTask = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:3030/todos",
+        await api.post("todos",
             {
                 "text": formValue,
                 "done": false
             });
         setFormValue("");
+        getTasks().catch(console.error);
     }
 
     const toggleDone = (id) => (e) => {
         setTasks(ps => {
             const task = ps.find(task => task.id === id);
             task.done = e.target.checked;
-            return [ps];
+            return [...ps];
         })
     }
 
+    const deleteTask = (task) => {
+        const id = task.id;
+        api.delete(`todos/${id}`)
+            .then(() => window.location.reload())
+    }
 
     return (
         <>
@@ -49,6 +55,7 @@ export default function TodoList() {
                             placeholder="Add Task" value={formValue}
                             onChange={changeHandler}
                         />
+
                         <Button type="submit" size="lg" className="align-self-end">
                             <PlusSquareFill/>
                         </Button>
@@ -67,15 +74,13 @@ export default function TodoList() {
                                 <div>
                                     <input className="form-check-input m-2"
                                            type="checkbox"
-                                           value=""
+                                           checked={task.done}
                                            onChange={toggleDone(task.id)}
                                     />
+                                    <Button className="my-2"><PencilSquare/></Button>
+
                                     <Button variant="danger"
-                                            onClick={() => {
-                                                const id = task.id;
-                                                axios.delete(`http://localhost:3030/todos/${id}`)
-                                                    .then(() => window.location.reload())
-                                            }}
+                                            onClick={() => deleteTask(task)}
                                     >Delete</Button>
                                 </div>
                             </ListGroup.Item>
