@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import api from './api';
 
 
-export default function TodoList({show}) {
+export default function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [formValue, setFormValue] = useState("");
 
@@ -45,6 +45,13 @@ export default function TodoList({show}) {
             .then(() => window.location.reload())
     }
 
+    const editTask = (task) => {
+        const id = task.id;
+        const editedTask = prompt("edit task", task.text);
+         api.put(`todos/${id}`, {"text": editedTask})
+             .then(()=>window.location.reload()).catch(console.error)
+    }
+
     return (
         <>
             <Container>
@@ -77,7 +84,10 @@ export default function TodoList({show}) {
                                            checked={task.done}
                                            onChange={toggleDone(task.id)}
                                     />
-                                    <Button className="my-2"><PencilSquare/></Button>
+                                    <Button className="my-2"
+                                           onClick={() => editTask(task)} >
+                                        <PencilSquare/>
+                                    </Button>
 
                                     <Button variant="danger"
                                             onClick={() => deleteTask(task)}
