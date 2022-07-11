@@ -1,6 +1,6 @@
 import {Form, Button} from "react-bootstrap";
 import {useState} from "react";
-import axios from "axios";
+import api from "./api";
 
 export default function Login() {
     const [username, setUsername] = useState("")
@@ -8,7 +8,7 @@ export default function Login() {
 
     const login = async (e) => {
         e.preventDefault();
-        const {data} = await axios.post('http://localhost:3030/login', {username, password});
+        const {data} = await api.post('login', {username, password});
         localStorage.setItem('token', data.token);
         window.location.reload();
     }

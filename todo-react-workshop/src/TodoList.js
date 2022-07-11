@@ -22,20 +22,25 @@ export default function TodoList() {
 
     const addTask = async (e) => {
         e.preventDefault();
-        await api.post("todos",
+        if (!formValue) alert("You cannot add empty task");
+        else{
+            await api.post("todos",
             {
                 "text": formValue,
                 "done": false
             });
-        setFormValue("");
-        getTasks().catch(console.error);
+            setFormValue("");
+            getTasks().catch(console.error);
+        }
     }
 
     const toggleDone = (id) => (e) => {
         setTasks(ps => {
             const task = ps.find(task => task.id === id);
             task.done = e.target.checked;
-            return [...ps];
+            const undone = ps.filter(task => !task.done);
+            const done = ps.filter(task => task.done);
+            return [...undone, ...done];
         })
     }
 
@@ -48,7 +53,8 @@ export default function TodoList() {
     const editTask = (task) => {
         const id = task.id;
         const editedTask = prompt("edit task", task.text);
-         api.put(`todos/${id}`, {"text": editedTask})
+        if (!editedTask) alert("Task cannot be empty!");
+        else api.put(`todos/${id}`, {"text": editedTask})
              .then(()=>window.location.reload()).catch(console.error)
     }
 
@@ -58,12 +64,12 @@ export default function TodoList() {
                 <Form onSubmit={addTask}>
                     <InputGroup className="m-2">
                         <Form.Control
-                            size="lg" type="text"
+                            size="md" type="text"
                             placeholder="Add Task" value={formValue}
                             onChange={changeHandler}
                         />
 
-                        <Button type="submit" size="lg" className="align-self-end">
+                        <Button type="submit" size="md" className="align-self-end">
                             <PlusSquareFill/>
                         </Button>
                     </InputGroup>
@@ -79,17 +85,19 @@ export default function TodoList() {
                                     !task.done ? <span>{task.text}</span> : <del>{task.text}</del>
                                 }</div>
                                 <div>
-                                    <input className="form-check-input m-2"
+                                    <input className="form-check-input mx-2"
                                            type="checkbox"
                                            checked={task.done}
                                            onChange={toggleDone(task.id)}
                                     />
-                                    <Button className="my-2"
+                                    <Button className="mx-2"
+                                            size="sm"
                                            onClick={() => editTask(task)} >
                                         <PencilSquare/>
                                     </Button>
 
                                     <Button variant="danger"
+                                            size="sm"
                                             onClick={() => deleteTask(task)}
                                     >Delete</Button>
                                 </div>
