@@ -2,11 +2,15 @@ import {Button, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 import {PlusSquareFill, PencilSquare} from "react-bootstrap-icons"
 import {useEffect, useState} from "react";
 import api from './api';
+import EditTaskModal from "./EditTaskModal";
 
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
+    const [currentTask, setCurrentTask] = useState({});
     const [formValue, setFormValue] = useState("");
+    const [modalShow, setModalShow] = useState(false);
+
 
     useEffect(() => {
         getTasks().catch(console.error)
@@ -16,6 +20,7 @@ export default function TodoList() {
         const response = await api.get("todos");
         setTasks(response.data);
     }
+
     const changeHandler = (e) => {
         setFormValue(e.target.value);
     }
@@ -23,12 +28,12 @@ export default function TodoList() {
     const addTask = async (e) => {
         e.preventDefault();
         if (!formValue) alert("You cannot add empty task");
-        else{
+        else {
             await api.post("todos",
-            {
-                "text": formValue,
-                "done": false
-            });
+                {
+                    "text": formValue,
+                    "done": false
+                });
             setFormValue("");
             getTasks().catch(console.error);
         }
@@ -46,17 +51,17 @@ export default function TodoList() {
 
     const deleteTask = (task) => {
         const id = task.id;
-        api.delete(`todos/${id}`)
+        const answer = window.confirm(`Are you sure you wish to delete task ${task.text}?`);
+        if (answer) api.delete(`todos/${id}`)
             .then(() => window.location.reload())
     }
 
-    const editTask = (task) => {
-        const id = task.id;
-        const editedTask = prompt("edit task", task.text);
-        if (!editedTask) alert("Task cannot be empty!");
-        else api.put(`todos/${id}`, {"text": editedTask})
-             .then(()=>window.location.reload()).catch(console.error)
+    const openEditModal = (task) => {
+        setCurrentTask(task);
+        setModalShow(true);
+        console.log(task);
     }
+
 
     return (
         <>
@@ -92,7 +97,7 @@ export default function TodoList() {
                                     />
                                     <Button className="mx-2"
                                             size="sm"
-                                           onClick={() => editTask(task)} >
+                                            onClick={openEditModal}>
                                         <PencilSquare/>
                                     </Button>
 
@@ -101,11 +106,17 @@ export default function TodoList() {
                                             onClick={() => deleteTask(task)}
                                     >Delete</Button>
                                 </div>
+
                             </ListGroup.Item>
                         ))
                     }
                 </ListGroup>
             </Container>
+            <EditTaskModal
+                task={currentTask}
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </>
     )
 
