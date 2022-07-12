@@ -7,9 +7,9 @@ import EditTaskModal from "./EditTaskModal";
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
-    const [currentTask, setCurrentTask] = useState({});
+    const [currentTask, setCurrentTask] = useState(null);
     const [formValue, setFormValue] = useState("");
-    const [modalShow, setModalShow] = useState(false);
+   // const [modalShow, setModalShow] = useState(false);
 
 
     useEffect(() => {
@@ -49,19 +49,30 @@ export default function TodoList() {
         })
     }
 
-    const deleteTask = (task) => {
+    const deleteTask = async (task) => {
         const id = task.id;
         const answer = window.confirm(`Are you sure you wish to delete task ${task.text}?`);
-        if (answer) api.delete(`todos/${id}`)
-            .then(() => window.location.reload())
+        if (answer){
+            await api.delete(`todos/${id}`);
+            await getTasks();
+        }
     }
 
     const openEditModal = (task) => {
         setCurrentTask(task);
-        setModalShow(true);
-        console.log(task);
+      //  setModalShow(true);
     }
 
+    const submitEditedTask = async updatedTask => {
+        const id = updatedTask.id;
+        const editedTask = updatedTask.text;
+        try {
+            !editedTask ? alert("Task cannot be empty!") : await api.put(`todos/${id}`, {"text": editedTask});
+        } catch (error){
+            console.error(error);
+        }
+        await getTasks();
+    }
 
     return (
         <>
@@ -97,7 +108,7 @@ export default function TodoList() {
                                     />
                                     <Button className="mx-2"
                                             size="sm"
-                                            onClick={openEditModal}>
+                                            onClick={() => openEditModal(task)}>
                                         <PencilSquare/>
                                     </Button>
 
@@ -113,9 +124,11 @@ export default function TodoList() {
                 </ListGroup>
             </Container>
             <EditTaskModal
-                task={currentTask}
-                show={modalShow}
-                onHide={() => setModalShow(false)}
+                currentTask={currentTask}
+                tasks={tasks}
+                show={!!currentTask}
+                onSubmit={submitEditedTask}
+                onHide={() => setCurrentTask(null)}
             />
         </>
     )
