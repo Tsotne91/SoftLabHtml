@@ -1,7 +1,7 @@
 import {Button, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 import {PlusSquareFill, PencilSquare} from "react-bootstrap-icons"
 import {useEffect, useState} from "react";
-import api from './api';
+import api from '../../api';
 import EditTaskModal from "./EditTaskModal";
 
 
@@ -101,7 +101,7 @@ export default function TodoList() {
                                     !task.done ? <span>{task.text}</span> : <del>{task.text}</del>
                                 }</div>
                                 <div>
-                                    <input className="form-check-input mx-2"
+                                    <input className="form-check-input m-2"
                                            type="checkbox"
                                            checked={task.done}
                                            onChange={toggleDone(task.id)}

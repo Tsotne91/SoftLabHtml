@@ -4,7 +4,7 @@ import {Col, Row} from "react-bootstrap";
 import MyCard from "./MyCard";
 import GridModal from "./GridModal";
 
-function App() {
+function AlbumGridMainPage() {
     const [albums, setAlbums] = useState([]);
     const [albumId, setAlbumId] = useState('');
     const [modalShow, setModalShow] = useState(false);
@@ -46,4 +46,4 @@ function App() {
     );
 }
 
-export default App;
+export default AlbumGridMainPage;

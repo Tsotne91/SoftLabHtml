@@ -10,7 +10,7 @@ export default function Login() {
         e.preventDefault();
         const {data} = await api.post('login', {username, password});
         localStorage.setItem('token', data.token);
-        window.location.reload();
+        window.location.assign('/todos');
     }
 
     return (
