@@ -12,8 +12,9 @@ export default function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [currentTask, setCurrentTask] = useState(null);
     const [formValue, setFormValue] = useState("");
-    const [loadingShow, setLoadingShow] = useState(SpinnerContext);
+    const [loadingShow, setLoadingShow] = useState(false);
 
+    const spinnerContext = useContext(SpinnerContext)
     const user = useContext(UserContext);
 
     useEffect(() => {
@@ -142,7 +143,7 @@ export default function TodoList() {
                 </Container>
             </SpinnerContext.Provider>
             <SpinnerLoading
-                show={loadingShow}
+                show={spinnerContext}
             />
             <EditTaskModal
                 currentTask={currentTask}
