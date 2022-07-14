@@ -9,7 +9,9 @@ export default function PhotoModal(props){
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            onHide={props.onHide}
         >
+            <Modal.Header closeButton/>
             <img src={props.photoUrl} alt="albumPhoto" className="w-75 p-2 align-self-center"/>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>

@@ -29,7 +29,7 @@ export default function GridModal(props) {
             <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        Using Grid in Modal
+                        List of Albums
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="show-grid">

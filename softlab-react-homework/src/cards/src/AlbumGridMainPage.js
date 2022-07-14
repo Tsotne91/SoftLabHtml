@@ -14,7 +14,6 @@ function AlbumGridMainPage() {
             const response = await axios.get('https://jsonplaceholder.typicode.com/albums');
             setAlbums(response.data);
         }
-
         getAlbums().catch(console.error)
     }, [])
 
