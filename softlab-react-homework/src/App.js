@@ -1,24 +1,28 @@
-import React, {useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TodoList from "./todo/src/TodoList";
 import AlbumGridMainPage from "./cards/src/AlbumGridMainPage";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {useState} from "react";
 import Login from "./Login";
 import api from "./api";
 import Layout from "./Layout";
-import UserContext from "./UserContext";
+import Spinner from "./SpinnerContext";
 
 
 function App() {
 
     const [user, setUser] = useState("admin");
+    const [loading, setLoading] = useState(false);
+
+    useContext(Spinner);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
+            setLoading(true);
             api.get('user')
-                .then((res) => setUser(()=> res.data))
-                .catch(console.error)
+                .then((res) => setUser(() => res.data))
+                .catch(console.error);
+            setLoading(false);
         }
     }, [])
 
@@ -26,18 +30,19 @@ function App() {
         <>
             {
                 !user ? <Login/> : (
-                    <UserContext.Provider value={user.username}>
-                        <BrowserRouter>
-                        <Routes>
-                            <Route path="/" element={<Layout/>}>
-                                <Route path="todos" element={<TodoList/>}/>
-                                <Route path="cards" element={<AlbumGridMainPage/>}/>
-                                <Route path="*" element={<div>page not found</div>}/>
-                            </Route>
-                        </Routes>
-                         </BrowserRouter>
-                    </UserContext.Provider>
-                // <UserContext.Provider value={user}> <TodoList/> </UserContext.Provider>
+                <Spinner.Provider value={loading}>
+                    <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Layout/>}>
+                            <Route path="todos" element={<TodoList/>}/>
+                            <Route path="cards" element={<AlbumGridMainPage/>}/>
+                            <Route path="*" element={<div>page not found</div>}/>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+                </Spinner.Provider>
+
+                    // <UserContext.Provider value={user}> <TodoList/> </UserContext.Provider>
                 )
             }
         </>

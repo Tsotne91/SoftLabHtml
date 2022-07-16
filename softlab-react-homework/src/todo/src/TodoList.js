@@ -1,31 +1,23 @@
 import {Button, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 import {PlusSquareFill, PencilSquare} from "react-bootstrap-icons"
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import api from '../../api';
 import EditTaskModal from "./EditTaskModal";
-import UserContext from "../../UserContext";
-import SpinnerLoading from "../../SpinnerLoading";
-import SpinnerContext from "../../SpinnerContext";
+
 
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [currentTask, setCurrentTask] = useState(null);
     const [formValue, setFormValue] = useState("");
-    const [loadingShow, setLoadingShow] = useState(false);
-
-    const spinnerContext = useContext(SpinnerContext)
-    const user = useContext(UserContext);
 
     useEffect(() => {
         getTasks().catch(console.error)
-        setLoadingShow(false);
     }, [tasks])
 
     async function getTasks() {
         const response = await api.get("todos");
         setTasks(response.data);
-        setLoadingShow(false);
     }
 
     const changeHandler = (e) => {
@@ -36,17 +28,14 @@ export default function TodoList() {
         e.preventDefault();
         if (!formValue) alert("You cannot add empty task");
         else {
-            setLoadingShow(true);
             await api.post("todos",
                 {
                     "text": formValue,
                     "done": false,
-                    "username": user.username
                 });
             setFormValue("");
             try {
                 await getTasks();
-                setLoadingShow(false);
             } catch (e) {
                 console.log(e);
             }
@@ -60,6 +49,8 @@ export default function TodoList() {
             task.done = e.target.checked;
             const undone = ps.filter(task => !task.done);
             const done = ps.filter(task => task.done);
+            task.done === true ? api.put(`todos/${id}`, {"done": false})
+                : api.put(`todos/${id}`, {"done": true});
             return [...undone, ...done];
         })
     }
@@ -88,9 +79,8 @@ export default function TodoList() {
 
     return (
         <>
-            <SpinnerContext.Provider value={loadingShow}>
+
                 <Container>
-                    <div>Hello, {user}!</div>
                     <Form onSubmit={addTask}>
                         <InputGroup className="m-2">
                             <Form.Control
@@ -114,10 +104,6 @@ export default function TodoList() {
                                     <div>{
                                         !task.done ? <span>{task.text}</span> : <del>{task.text}</del>
                                     }</div>
-                                    {/*This is not working*/}
-                                    <div className="text-muted">
-                                        {task.username}
-                                    </div>
                                     <div>
                                         <input className="form-check-input m-2"
                                                type="checkbox"
@@ -135,16 +121,11 @@ export default function TodoList() {
                                                 onClick={() => deleteTask(task)}
                                         >Delete</Button>
                                     </div>
-
                                 </ListGroup.Item>
                             ))
                         }
                     </ListGroup>
                 </Container>
-            </SpinnerContext.Provider>
-            <SpinnerLoading
-                show={spinnerContext}
-            />
             <EditTaskModal
                 currentTask={currentTask}
                 tasks={tasks}
