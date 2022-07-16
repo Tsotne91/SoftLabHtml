@@ -1,5 +1,5 @@
 import React from "react";
 
-const Spinner = React.createContext(false);
+const SpinnerContext = React.createContext(false);
 
-export default Spinner;
+export default SpinnerContext;

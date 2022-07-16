@@ -1,9 +1,10 @@
 import {Button, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 import {PlusSquareFill, PencilSquare} from "react-bootstrap-icons"
-import {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import api from '../../api';
 import EditTaskModal from "./EditTaskModal";
-
+import SpinnerLoading from "../../SpinnerLoading";
+import SpinnerContext from "../../SpinnerContext";
 
 
 export default function TodoList() {
@@ -11,13 +12,17 @@ export default function TodoList() {
     const [currentTask, setCurrentTask] = useState(null);
     const [formValue, setFormValue] = useState("");
 
+    const {loading, setLoading} = useContext(SpinnerContext);
+
     useEffect(() => {
-        getTasks().catch(console.error)
-    }, [tasks])
+        getTasks().catch(console.error);
+    }, [])
 
     async function getTasks() {
+        setLoading(true);
         const response = await api.get("todos");
         setTasks(response.data);
+        setLoading(false);
     }
 
     const changeHandler = (e) => {
@@ -35,7 +40,9 @@ export default function TodoList() {
                 });
             setFormValue("");
             try {
+                setLoading(true);
                 await getTasks();
+                setLoading(false);
             } catch (e) {
                 console.log(e);
             }
@@ -45,13 +52,13 @@ export default function TodoList() {
 
     const toggleDone = (id) => (e) => {
         setTasks(ps => {
+            setLoading(true);
             const task = ps.find(task => task.id === id);
             task.done = e.target.checked;
             const undone = ps.filter(task => !task.done);
             const done = ps.filter(task => task.done);
-            task.done === true ? api.put(`todos/${id}`, {"done": false})
-                : api.put(`todos/${id}`, {"done": true});
             return [...undone, ...done];
+
         })
     }
 
@@ -59,8 +66,10 @@ export default function TodoList() {
         const id = task.id;
         const answer = window.confirm(`Are you sure you wish to delete task ${task.text}?`);
         if (answer) {
+            setLoading(true);
             await api.delete(`todos/${id}`);
             await getTasks();
+            setLoading(false);
         }
     }
 
@@ -70,7 +79,12 @@ export default function TodoList() {
         const id = updatedTask.id;
         const editedTask = updatedTask.text;
         try {
-            !editedTask ? alert("Task cannot be empty!") : await api.put(`todos/${id}`, {"text": editedTask});
+            if (!editedTask) alert("Task cannot be empty!");
+        else {
+            setLoading(true);
+            await api.put(`todos/${id}`, {"text": editedTask});
+            setLoading(false);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -94,7 +108,6 @@ export default function TodoList() {
                             </Button>
                         </InputGroup>
                     </Form>
-
 
                     <ListGroup className="m-3">
                         {
@@ -126,6 +139,7 @@ export default function TodoList() {
                         }
                     </ListGroup>
                 </Container>
+            <SpinnerLoading show={loading}/>
             <EditTaskModal
                 currentTask={currentTask}
                 tasks={tasks}
