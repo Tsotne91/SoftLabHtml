@@ -1,11 +1,13 @@
-import Spinner from 'react-bootstrap/Spinner';
+import {Spinner} from "react-bootstrap";
 
 function SpinnerLoading({show}) {
+
+
     return (
-        <Spinner show={show} animation="border" role="status" className="">
-            <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        show ? <>
+            <Spinner animation="border" role="status" className=""/>
+            <span>Loading...</span>
+        </> : null
     );
 }
-
 export default SpinnerLoading;

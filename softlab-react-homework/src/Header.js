@@ -1,4 +1,4 @@
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, Button} from "react-bootstrap";
 
 export default function Header(){
 
@@ -9,6 +9,12 @@ export default function Header(){
                 <Nav className="me-auto">
                     <Nav.Link href="/todos">To do</Nav.Link>
                     <Nav.Link href="./cards">cards</Nav.Link>
+                    <Button variant="outline-light"
+                            onClick={() => {
+                                localStorage.clear();
+                                window.location.reload();
+                            }}
+                    >Logout</Button>
                 </Nav>
             </Container>
         </Navbar>

@@ -1,17 +1,16 @@
 import {Button, Container, Form, InputGroup, ListGroup} from "react-bootstrap";
 import {PlusSquareFill, PencilSquare} from "react-bootstrap-icons"
 import React, {useEffect, useState, useContext} from "react";
-import api from '../../api';
-import EditTaskModal from "./EditTaskModal";
-import SpinnerLoading from "../../SpinnerLoading";
-import SpinnerContext from "../../SpinnerContext";
+import api from '../../api.js';
+import EditTaskModal from "./EditTaskModal.js";
+import SpinnerLoading from "../../SpinnerLoading.js";
+import SpinnerContext from "../../SpinnerContext.js";
 
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [currentTask, setCurrentTask] = useState(null);
     const [formValue, setFormValue] = useState("");
-
     const {loading, setLoading} = useContext(SpinnerContext);
 
     useEffect(() => {
@@ -19,15 +18,11 @@ export default function TodoList() {
     }, [])
 
     async function getTasks() {
-        setLoading(true);
         const response = await api.get("todos");
         setTasks(response.data);
-        setLoading(false);
     }
 
-    const changeHandler = (e) => {
-        setFormValue(e.target.value);
-    }
+    const changeHandler = (e) => setFormValue(e.target.value);
 
     const addTask = async (e) => {
         e.preventDefault();
@@ -46,7 +41,6 @@ export default function TodoList() {
             } catch (e) {
                 console.log(e);
             }
-
         }
     }
 
@@ -57,6 +51,7 @@ export default function TodoList() {
             task.done = e.target.checked;
             const undone = ps.filter(task => !task.done);
             const done = ps.filter(task => task.done);
+            setLoading(false);
             return [...undone, ...done];
 
         })
@@ -66,10 +61,10 @@ export default function TodoList() {
         const id = task.id;
         const answer = window.confirm(`Are you sure you wish to delete task ${task.text}?`);
         if (answer) {
-            setLoading(true);
+            // setLoading(true);
             await api.delete(`todos/${id}`);
             await getTasks();
-            setLoading(false);
+            // setLoading(false);
         }
     }
 
@@ -93,7 +88,6 @@ export default function TodoList() {
 
     return (
         <>
-
                 <Container>
                     <Form onSubmit={addTask}>
                         <InputGroup className="m-2">
@@ -128,7 +122,6 @@ export default function TodoList() {
                                                 onClick={() => openEditModal(task)}>
                                             <PencilSquare/>
                                         </Button>
-
                                         <Button variant="danger"
                                                 size="sm"
                                                 onClick={() => deleteTask(task)}
@@ -139,7 +132,9 @@ export default function TodoList() {
                         }
                     </ListGroup>
                 </Container>
-            <SpinnerLoading show={loading}/>
+            <SpinnerLoading
+                show={loading}
+            />
             <EditTaskModal
                 currentTask={currentTask}
                 tasks={tasks}

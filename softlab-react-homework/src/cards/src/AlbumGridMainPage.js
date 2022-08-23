@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Col, Row} from "react-bootstrap";
-import MyCard from "./MyCard";
-import GridModal from "./GridModal";
+import MyCard from "./MyCard.js";
+import GridModal from "./GridModal.js";
 
 function AlbumGridMainPage() {
     const [albums, setAlbums] = useState([]);

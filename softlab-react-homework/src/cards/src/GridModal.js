@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Col, Modal, Row, Button} from 'react-bootstrap'
 import axios from "axios";
-import PhotoModal from "./PhotoModal";
+import PhotoModal from "./PhotoModal.js";
 
-export default function GridModal(props) {
+export default function GridModal({show, onHide, albumId}) {
 
     const [photos, setPhotos] = useState([]);
     const [photoUrl, setPhotoUrl] = useState("");
@@ -11,10 +11,10 @@ export default function GridModal(props) {
 
     useEffect(() => {
         async function getPhotos() {
-            if (props.albumId) {
+            if (albumId) {
                 const response = await axios.get(`https://jsonplaceholder.typicode.com/photos`, {
                     params: {
-                        albumId: props.albumId
+                        albumId: albumId
                     }
                 });
                 setPhotos(response.data);
@@ -22,11 +22,11 @@ export default function GridModal(props) {
         }
 
         getPhotos().catch(console.error)
-    }, [props.albumId])
+    }, [albumId])
 
     return (
         <>
-            <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
+            <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter" size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         List of Albums
@@ -55,7 +55,7 @@ export default function GridModal(props) {
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
+                    <Button onClick={onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
             <PhotoModal

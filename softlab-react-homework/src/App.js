@@ -1,22 +1,20 @@
 import React, {useEffect, useState} from "react";
-import TodoList from "./todo/src/TodoList";
-import AlbumGridMainPage from "./cards/src/AlbumGridMainPage";
+import TodoList from "./todo/src/TodoList.js";
+import AlbumGridMainPage from "./cards/src/AlbumGridMainPage.js";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Login from "./Login";
-import api from "./api";
-import Layout from "./Layout";
-import SpinnerContext from "./SpinnerContext";
+import Login from "./Login.js";
+import api from "./api.js";
+import Layout from "./Layout.js";
+import SpinnerContext from "./SpinnerContext.js";
 
 function App() {
 
-    const [user, setUser] = useState("admin");
+    const [user, setUser] = useState("");
     const [loading, setLoading] = useState(false);
-
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-
             api.get('user')
                 .then((res) => setUser(() => res.data))
                 .catch(console.error);
@@ -36,10 +34,8 @@ function App() {
                             <Route path="*" element={<div>page not found</div>}/>
                         </Route>
                     </Routes>
-                </BrowserRouter>
-
+                    </BrowserRouter>
                 </SpinnerContext.Provider>
-
                     // <UserContext.Provider value={user}> <TodoList/> </UserContext.Provider>
                 )
             }
