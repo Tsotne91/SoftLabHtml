@@ -61,10 +61,10 @@ export default function TodoList() {
         const id = task.id;
         const answer = window.confirm(`Are you sure you wish to delete task ${task.text}?`);
         if (answer) {
-            // setLoading(true);
+            setLoading(true);
             await api.delete(`todos/${id}`);
             await getTasks();
-            // setLoading(false);
+            setLoading(false);
         }
     }
 
